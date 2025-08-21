@@ -5,6 +5,8 @@ require('dotenv').config()
 const port = process.env.PORT
 const authRoutes = require("./route/authController")
 const producRoutes = require("./route/productController")
+const { errorHandler } = require("./middelware/errorHandler")
+const notFound = require("./middelware/pageNotFound")
 //middelware
 app.use(require("cors")())
 app.use(express.json())
@@ -22,7 +24,9 @@ app.use('/api/product', producRoutes)
 
 
 
-
+//error handler in aur app
+app.use(notFound)
+app.use(errorHandler)
 
 dbConnet().then(()=>{
     app.listen(port,()=>{
