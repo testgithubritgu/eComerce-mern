@@ -5,7 +5,7 @@ const newUser = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    role: { type: String, enum: ["admin", "doctor", "patient"], required: true },
+    role: { type: String, enum: ["admin", "sub_admin", "user"] ,default:"user"},
     address:String,
     phone: String,
 },{timestamps:true})

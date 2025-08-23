@@ -26,10 +26,10 @@ const orderSchema = new mongoose.Schema({
     address: {
         street: { type: String, required: true },
         city: { type: String, required: true },
-        State: { type: String, required: true },
+        state: { type: String, required: true },
         pincode: { type: String, required: true },
     },
-    status: { type: String, enum: ["pending", "shipped", "delivered"], default: "pending" }
+    status: { type: String, enum: ["pending", "shipped", "delivered","canceled"], default: "pending" }
 })
 
 module.exports = mongoose.model("Orders", orderSchema)
