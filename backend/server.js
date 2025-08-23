@@ -30,7 +30,7 @@ app.use('/api/product', producRoutes)
 app.use("/api/order", orderRoutes)
 
 //routes for cartItems
-app.use("/api/addToCart", cartRoutes)
+app.use("/api/cart", cartRoutes)
 
 
 //error handler in aur app

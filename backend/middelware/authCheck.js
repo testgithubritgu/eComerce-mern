@@ -11,6 +11,6 @@ exports.authCheck = async(req,res ,next)=>{
         req.user = decode
         next()
     } catch (error) {
-        res.status(401).json({message:"token expired need to login"})
+       return  res.status(401).json({message:"token expired need to login"})
     }
 }
