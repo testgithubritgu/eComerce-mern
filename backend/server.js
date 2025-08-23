@@ -7,6 +7,7 @@ const port = process.env.PORT
 const authRoutes = require("./route/authController")
 const producRoutes = require("./route/productController")
 const orderRoutes = require("./route/orderController")
+const cartRoutes  = require("./route/cartController")
 
 //middelware imports
 const { dbConnet } = require("./config/db")
@@ -28,7 +29,8 @@ app.use('/api/product', producRoutes)
 //routs for user order 
 app.use("/api/order", orderRoutes)
 
-
+//routes for cartItems
+app.use("/api/addToCart", cartRoutes)
 
 
 //error handler in aur app

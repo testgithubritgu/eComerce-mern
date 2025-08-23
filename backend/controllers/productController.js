@@ -36,8 +36,6 @@ exports.getProduct = async (req, res) => {
     }
 }
 
-
-
 //update product by id
 exports.updateProduct = async (req, res) => {
     const { id } = req.params

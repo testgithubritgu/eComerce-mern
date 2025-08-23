@@ -2,6 +2,7 @@ const userModel = require("../model/User")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
+//create new user
 exports.newUser = async (req, res) => {
     const { name, email, password, role, address, phone } = req.body
     const userExist = await userModel.findOne({ email })
@@ -22,6 +23,7 @@ exports.newUser = async (req, res) => {
     }
 }
 
+//user login
 exports.login = async (req, res) => {
     const { email, password } = req.body
     try {
@@ -44,6 +46,7 @@ exports.login = async (req, res) => {
 
 }
 
+//update account
 exports.userAccountUpdate = async (req, res) => {
     try {
         const { name, email, oldpass, newpass, address, phone } = req.body
@@ -81,6 +84,7 @@ exports.userAccountUpdate = async (req, res) => {
     }
 }
 
+//get all user
 exports.getAllusers = async (req, res) => {
     try {
 
