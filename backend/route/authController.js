@@ -8,4 +8,6 @@ route.post("/register" ,newUser)
 route.post("/login" ,login)
 route.put("/updateAccount", authCheck, roleUser("admin","user"), userAccountUpdate)
 route.get("/getAllUsers", authCheck, roleUser("admin"), getAllusers)
+
+
 module.exports = route 

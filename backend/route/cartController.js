@@ -7,4 +7,7 @@ const router = express.Router()
 router.post("/addItem/:id",authCheck, addToCart)
 router.post("/remove_cart_item", authCheck, removeCartItem)
 router.get("/getmycart", authCheck, getMyCartItems)
+
+
+
 module.exports = router

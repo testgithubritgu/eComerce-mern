@@ -15,7 +15,6 @@ exports.addToCart = async (req, res) => {
         if (!isProductExist) {
             return res.status(404).json({ message: "prduct not found" })
         }
-
         const checkUserCart = await cartModel.findOne({ user: id })
         const price = qty * isProductExist.price
         const productForCart = {
@@ -68,18 +67,17 @@ exports.removeCartItem = async (req, res) => {
 exports.getMyCartItems = async(req,res)=>{
     try {
         const {id} = req.user
-        const findMyCart = await cartModel.findOne({user:id})
-        if(!findMyCart){
-            return res.status(404).json({message:"no cart data found "})
-        }
+       
         const myCart = await cartModel.aggregate([{$match:{user:id}},{$unwind:"$items"},{$lookup:{
             from:"products",
             localField:"items.Product",
             foreignField:"_id",
             as:"myCartItems"
-        }}])
+        }},
+            
+    ])
         console.log(myCart)
-        res.status(200).json({message:"cart item found successfully ",myCart:findMyCart.items})
+        res.status(200).json({message:"cart item found successfully ",myCart})
     } catch (error) {
         res.status(500).json({message:"internal server error ",err:error.message})
     }

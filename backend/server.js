@@ -8,6 +8,9 @@ const authRoutes = require("./route/authController")
 const producRoutes = require("./route/productController")
 const orderRoutes = require("./route/orderController")
 const cartRoutes  = require("./route/cartController")
+const favRoutes = require("./route/favRoute")
+const reviewRoutes = require("./route/reviewController")
+
 
 //middelware imports
 const { dbConnet } = require("./config/db")
@@ -31,6 +34,12 @@ app.use("/api/order", orderRoutes)
 
 //routes for cartItems
 app.use("/api/cart", cartRoutes)
+
+//routes for favourite items
+app.use("/api/favourite",favRoutes)
+
+//routes for review product
+app.use("/api/review",reviewRoutes)
 
 
 //error handler in aur app
