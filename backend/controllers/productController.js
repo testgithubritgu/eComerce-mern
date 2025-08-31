@@ -14,7 +14,7 @@ exports.newProduct = async (req, res) => {
         const newItem = await productModel.create({
             name, category, price, discount, stock, desc, productImage:img.filename
         })
-        res.status(201).json({ message: 'product created successfully' })
+        res.status(201).json({ message: 'product created successfully', newItem })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "internal sever error" })
