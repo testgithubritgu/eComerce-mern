@@ -37,7 +37,7 @@ exports.login = async (req, res) => {
         if (!checkPass) { return res.status(400).json({ message: "invalid credintials " }) }
 
         const token = jwt.sign({ id: userExist._id, role: userExist.role }, process.env.TOKEN_SECRET_KEY)
-        res.status(200).json({ message: "user logged in...", token })
+        res.status(200).json({ message: "user logged in...", token, userExist })
 
     } catch (error) {
         res.status(500).json({ message: "internal server error", error })
@@ -90,7 +90,7 @@ exports.getAllusers = async (req, res) => {
 
         const getUsers = await userModel.find()
         res.status(200).json({ message: "all users", users: getUsers })
-        
+
     } catch (error) {
         res.status(500).json({ message: "internal server error ", error })
     }

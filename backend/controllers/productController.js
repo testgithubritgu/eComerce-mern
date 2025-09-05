@@ -25,14 +25,28 @@ exports.newProduct = async (req, res) => {
 exports.getProduct = async (req, res) => {
 
     try {
-        const { name } = req.query
-        const findProduct = await productModel.find({ name })
+        const { name ,limit } = req.query
+        const findProduct = await productModel.find({ name:{$regex:`^${name}`,$options:"i"} }).limit(Number(limit))
         if (findProduct.length === 0) {
             return res.status(404).json({ message: "no product found" })
         }
         res.status(200).json({ message: "product found!!", Product: findProduct })
     } catch (error) {
-        res.status(500).json({ message: "internal server error" })
+        res.status(500).json({ message: "internal server error" , err:error.message})
+    }
+}
+//get product by user query
+exports.getProduct = async (req, res) => {
+
+    try {
+        const { limit } = req.query
+        const findProduct = await productModel.find().limit(Number(limit))
+        if (findProduct.length === 0) {
+            return res.status(404).json({ message: "no product found" })
+        }
+        res.status(200).json({ message: "product found!!", Product: findProduct })
+    } catch (error) {
+        res.status(500).json({ message: "internal server error" , err:error.message})
     }
 }
 

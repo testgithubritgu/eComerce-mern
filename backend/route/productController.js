@@ -10,6 +10,9 @@ router.post('/new_product', authCheck, upload.single("file"), newProduct)
 //get product by user query
 router.get("/get_product", authCheck, getProduct)
 
+//get limited product
+router.get("/product_limit", authCheck, getProduct)
+
 //get product by productID
 router.get('/getProduct/:id',getProductById)
 

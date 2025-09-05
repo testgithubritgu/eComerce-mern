@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {assets} from "../../assets/assets"
 import axios from "axios"
 import {baseURL} from "../../Utils/service"
 import { classNameForaAccountUser, inputData } from './ClassName'
+import { authContext } from '../../Context/Context'
+import { Link, useNavigate } from 'react-router-dom'
 
 const AccountForm = () => {
   const [checkLoginOrRegister,setcheckLoginOrRegister] = useState(false)
   const [handleInputData, sethandleInputData] =useState({})
   const [errorHandling,seterrorHandling] = useState(false)
+  const {setuser ,user} = useContext(authContext)
+  const navigate = useNavigate()
   const onInputFieldChange = (e)=>{
     const val = e.target.value
     sethandleInputData(prev =>({...prev,[e.target.name]:val}))
@@ -18,13 +22,20 @@ console.log(baseURL)
     try {
       const res = await axios.post(`${baseURL}/auth/${!checkLoginOrRegister?"login":"register"}`,handleInputData);
       localStorage.setItem("token",res.data.token)
-      localStorage.setItem("user",JSON.stringify(res.data.user))
+      console.log(res)
+      localStorage.setItem("user", JSON.stringify(res.data.userExist));
+      
       setcheckLoginOrRegister(false)
       seterrorHandling(false)
+      // window.location.reload()
+      navigate("/")
+      
+
     } catch (error) {
       seterrorHandling(true)
     }
   }
+ console.log(user)
   return (
     <div className="min-h-screen relative w-full flex lg:flex-row ">
       <img
@@ -32,9 +43,18 @@ console.log(baseURL)
         className="h-[500px] hidden absolute  lg:block z-20 bottom-7 left-[50%] "
         alt=""
       />
+      <Link to={"/"}>
+        <button className="absolute z-50 top-6 left-7 bg-orange-500 py-3 px-4 rounded-xl cursor-pointer text-sm font-medium text-white">
+          Go Home ⬅️
+        </button>
+      </Link>
       <div className="h-screen flex-1 p-4 bg-gray-100 relative flex  justify-center items-center">
         <div className={classNameForaAccountUser}>
-         {errorHandling &&  <p className='text-sm text-red-900 text-center'>Invalid credintials*</p>}
+          {errorHandling && (
+            <p className="text-sm text-red-900 text-center">
+              Invalid credintials*
+            </p>
+          )}
           <h1 className="text-3xl mb-3 text-[rgb(247,137,27)] font-semibold">
             <span>{!checkLoginOrRegister ? "Login" : "SignUp"}</span> Here
           </h1>

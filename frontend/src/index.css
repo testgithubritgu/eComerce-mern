@@ -6,3 +6,6 @@
 *{
     font-family: "Outfit" ;
 }
+html {
+    overflow-x: hidden;
+}
