@@ -7,6 +7,8 @@ import Footer from './Components/Footer'
 import Cart from './Components/Cart'
 import AccountSetting from './Components/Account/AccountSetting'
 import Account from './Pages/Account'
+import Product from './Pages/ProductPage'
+import TopSell from './Components/TopSell'
 
 const App = () => {
   const checkPath = useLocation()
@@ -14,6 +16,7 @@ const App = () => {
 
   return (
     <>
+        <TopSell/>
     <div className='min-h-screen w-full py-3
      px-4'>
         {!location && <Navbar/>}
@@ -22,6 +25,7 @@ const App = () => {
       <Route path='/account' element={<AccountForm/>}/>
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/setting' element={<Account/>}/>
+      <Route path='/product/:id' element={<Product/>}/>
         
            </Routes>
     </div>

@@ -2,11 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import axios from 'axios'
 import { baseURL } from '../Utils/service'
+import { useNavigate } from 'react-router-dom'
 
 const Products = () => {
+  const navigate = useNavigate()
   const  [product,setproduct] = useState([])
   const [ProductLimit, setProductLimit] = useState(8)
   const token = localStorage.getItem("token")
+
+  const getProductById = async(e)=>{
+    navigate(`/product/${e}`)
+  }
+
   const getProduct = async()=>{
     try {
       const limitset = ProductLimit + 8;
@@ -52,7 +59,7 @@ const Products = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-fit">
           {product.map((e, i) => (
-            <div className=" min-h-fit">
+            <div onClick={()=>getProductById(e._id)} className=" min-h-fit cursor-pointer">
               <div className="bg-gray-300 p-2 flex justify-center relative h-fit">
                 <img src={e.productImage} className="h-[200px]" alt="" />
                 <div className="absolute right-2 top-2">

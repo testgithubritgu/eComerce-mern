@@ -27,8 +27,8 @@ console.log(baseURL)
       
       setcheckLoginOrRegister(false)
       seterrorHandling(false)
-      // window.location.reload()
       navigate("/")
+      window.location.reload()
       
 
     } catch (error) {
