@@ -9,6 +9,7 @@ import AccountSetting from './Components/Account/AccountSetting'
 import Account from './Pages/Account'
 import Product from './Pages/ProductPage'
 import TopSell from './Components/TopSell'
+import AboutUs from './Pages/AboutUs'
 
 const App = () => {
   const checkPath = useLocation()
@@ -26,6 +27,7 @@ const App = () => {
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/setting' element={<Account/>}/>
       <Route path='/product/:id' element={<Product/>}/>
+      <Route path='/about' element={<AboutUs/>}/>
         
            </Routes>
     </div>

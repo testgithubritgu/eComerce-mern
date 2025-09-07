@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authContext } from '../Context/Context';
 import UserProfile from './Navbar/UserProfile';
 import NavbarSearch from './Navbar/NavbarSearch';
-
+import { CiHeart } from "react-icons/ci";
 const Navbar = () => {
 
 
@@ -33,14 +33,16 @@ const Navbar = () => {
         </div>
 
         <div className="text-sm flex justify-center items-center gap-4">
-          <NavbarSearch/>
-          <UserProfile/>
+          <NavbarSearch />
+          <UserProfile />
           <Link to={"/cart"}>
-            <div className="flex flex-col text-center cursor-pointer">
-              <span className="text-4xl">🛒</span>
-              <span>Cart</span>
-            </div>
+            <span className="text-4xl">🛒</span>
           </Link>
+          <div className='text-4xl cursor-pointer relative text-slate-600 '>
+            
+            <CiHeart />
+            <span className='absolute text-red-500 text-sm -top-2 -right-2 font-bold '>2</span>
+          </div>
         </div>
       </div>
     </>

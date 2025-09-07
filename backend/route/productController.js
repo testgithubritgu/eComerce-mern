@@ -11,7 +11,7 @@ router.post('/new_product', authCheck, upload.single("file"), newProduct)
 router.get("/get_product", authCheck, getProduct)
 
 //get limited product
-router.get("/product_limit", authCheck, getProduct)
+router.get("/product_limit", getProduct)
 
 //get product by productID
 router.get('/getProduct/:id',getProductById)

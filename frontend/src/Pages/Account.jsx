@@ -1,6 +1,15 @@
 import React from 'react'
 
+import { useNavigate } from 'react-router-dom';
+
 const Account = () => {
+  const navigate = useNavigate()
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/")
+    window.location.reload();
+  };
   return (
     <>
       <div className="h-fit py-32 px-32  flex">
@@ -21,6 +30,7 @@ const Account = () => {
               My WishList
             </h1>
           </div>
+          <button className='text-white bg-red-500 ' onClick={()=>logout()}>Logout</button>
         </div>
         <div className=" w-full">sdf</div>
       </div>

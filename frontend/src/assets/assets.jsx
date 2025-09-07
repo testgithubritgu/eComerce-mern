@@ -7,6 +7,7 @@ import feature1 from "./FeturedWomens/featureSection2.jpg"
 import feature2 from "./FeturedWomens/featureSection3.jpg"
 import feature3 from "./FeturedWomens/featureSection4.jpg"
 import loader from "./loading-image.webp"
+import shop from "./shop.jpg"
 export const assets = {
   pass,
   shopping,
@@ -17,4 +18,5 @@ export const assets = {
   feature2,
   feature3,
   loader,
+  shop,
 };
