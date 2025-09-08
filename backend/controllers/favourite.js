@@ -30,6 +30,7 @@ exports.addFavItems = async (req, res) => {
                     items: [pushItem]
                 })
             }
+            
             return res.status(201).json({ message: "added fav0ourite",favourite:findFav })
 
         } catch (error) {
@@ -55,5 +56,22 @@ exports.removerFavItems = async(req,res)=>{
         return res.status(404).json({message:"no items found!"})
     } catch (error) {
         res.status(500).json({err:error.message})
+    }
+}
+
+exports.getFavourite = async(req,res)=>{
+    try {
+        const {id}  = req.user
+        const findUser = await favModel.findOne({user:id})
+        if (!findUser) {return res.status(404).json({message:"no user found"})}
+        const getProducts = await favModel.aggregate([{ $match: { user: findUser.user } },{$unwind:"$items"},{$lookup:{
+            from:"products",
+            localField:"items.product",
+            foreignField:"_id",
+            as:"prdData"
+        }},{$unwind:"$prdData"},{$group:{_id:id,myproduct:{$push:"$prdData"}}}])
+        res.status(200).json({getProducts})
+    } catch (error) {
+        console.log(error.message)
     }
 }
