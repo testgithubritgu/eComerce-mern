@@ -36,7 +36,7 @@ exports.login = async (req, res) => {
 
         if (!checkPass) { return res.status(400).json({ message: "invalid credintials " }) }
 
-        const token = jwt.sign({ id: userExist._id, role: userExist.role }, process.env.TOKEN_SECRET_KEY)
+        const token = jwt.sign({ id: userExist._id, role: userExist.role }, process.env.TOKEN_SECRET_KEY,{expiresIn:"1h"})
         res.status(200).json({ message: "user logged in...", token, userExist })
 
     } catch (error) {

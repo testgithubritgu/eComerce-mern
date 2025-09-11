@@ -1,8 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../../assets/assets'
+import axios from 'axios'
+import { baseURL } from '../../Utils/service'
 
 const MyCart = () => {
   const [qty,setqty] = useState(1)
+  const [myCart,setmyCart] = useState(null)
+ useEffect(()=>{
+  const token = localStorage.getItem("token")
+    async function getcart(){
+      try {
+        const res = await axios.get(`${baseURL}/cart/getmycart`,{headers:{"authorization":"Bearer "+(token && token)}});
+        console.log(res)
+      } catch (error) {
+        
+      }
+    }
+    getcart()
+ },[])
   return (
     <>
        <div className="min-h-fit p-5 px-32 ">

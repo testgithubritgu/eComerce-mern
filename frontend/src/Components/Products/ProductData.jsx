@@ -1,14 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import { Toaster, toast } from "sonner";
 import { CiHeart } from "react-icons/ci";
 import { TbTruckDelivery } from "react-icons/tb";
 import { PiKeyReturn } from "react-icons/pi";
-
+import { FaHeart } from "react-icons/fa";
 import { authContext } from "../../Context/Context";
-const ProductData = () => {
+import axios from "axios";
+import { baseURL } from "../../Utils/service";
+import { useParams } from "react-router-dom";
+const ProductData = ({ favItem }) => {
+    const [bgOfHeart, setbgOfHeart] = useState(false);
+  const { id } = useParams();
+  const [count, setcount] = useState(1);
   const [size, setsize] = useState(0);
-
+  const token = localStorage.getItem("token");
   const { setproductImgdata, prdData } = useContext(authContext);
+
   const sizeArray = [
     { size: "XS" },
     { size: "S" },
@@ -16,11 +23,43 @@ const ProductData = () => {
     { size: "L" },
     { size: "XL" },
   ];
+  const addToFav = async () => {
+    if(!token){
+      toast.warning("Ooops you are not logged in")
+      return 
+    }
+    try {
+      setbgOfHeart(token?true:false);
+      console.log(id);
+      const res = await axios.post(`${baseURL}/favourite/addItem/${id}`, null, {
+        headers: { authorization: "Bearer " + (token && token) },
+      });
+      toast.success("added to favourite")
+      console.log(res);
+    } catch (error) {
+     if(
+        error.response.data.message === "Product already in favourites"
+      ){
+        toast.warning("Already added in your favourite 😋")
+      }
+    }
+  };
 
-  const [count, setcount] = useState(1);
+  const addToCart = async()=>{
+    try {
+      const res = await axios.post(
+        `${baseURL}cart/addItem/${id}`
+      )
+      console.log(res)
+    } catch (error) {
+      
+    }
+  }
+
 
   return (
     <>
+      <Toaster richColors position="top-right" />
       {prdData ? (
         <div className="productDetail ">
           <h1 className="text-slate-800 font-bold text-[30px]">
@@ -80,8 +119,18 @@ const ProductData = () => {
             <button className="h-[50px] w-[200px] bg-red-500 rounded text-white">
               Buy Now
             </button>
-            <button className="h-[50px] w-[50px] text-lg text-center flex justify-center items-center border">
-              <CiHeart className="font-semibold" />
+            <button onClick={()=>addToCart()} className="h-[50px] w-[200px] bg-yellow-200 text-black rounded">
+              Add to Cart
+            </button>
+            <button
+              onClick={() => addToFav()}
+              className={`h-[50px] w-[50px] text-lg text-center flex justify-center items-center border `}
+            >
+              {favItem || bgOfHeart ? (
+                <FaHeart className="text-red-500" />
+              ) : (
+                <CiHeart className={`font-semibold `} />
+              )}
             </button>
           </section>
           <section

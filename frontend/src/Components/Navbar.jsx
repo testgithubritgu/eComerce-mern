@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
-import { assets } from '../assets/assets';
+
 import { Link, useNavigate } from 'react-router-dom';
-import { authContext } from '../Context/Context';
+
 import UserProfile from './Navbar/UserProfile';
 import NavbarSearch from './Navbar/NavbarSearch';
 import { CiHeart } from "react-icons/ci";
@@ -12,7 +11,7 @@ const Navbar = () => {
   const navLinks = [
     "Home","Contact","About","Sign_Up"
   ]
-  const {user} = useContext(authContext)
+ 
   return (
     <>
       <div className="flex py-2 px-4  justify-between items-center shadow-xl">

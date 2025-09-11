@@ -8,8 +8,10 @@ import feature2 from "./FeturedWomens/featureSection3.jpg"
 import feature3 from "./FeturedWomens/featureSection4.jpg"
 import loader from "./loading-image.webp"
 import shop from "./shop.jpg"
+import shoppingloader from "./cart-add-to-cart.webp"
 export const assets = {
   pass,
+  shoppingloader,
   shopping,
   profile,
   feature,

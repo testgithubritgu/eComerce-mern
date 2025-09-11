@@ -68,14 +68,7 @@ exports.getMyCartItems = async(req,res)=>{
     try {
         const {id} = req.user
        
-        const myCart = await cartModel.aggregate([{$match:{user:id}},{$unwind:"$items"},{$lookup:{
-            from:"products",
-            localField:"items.Product",
-            foreignField:"_id",
-            as:"myCartItems"
-        }},
-            
-    ])
+        const myCart = await cartModel.aggregate([{$group:{_id:"$user",item:{$push:"$items"}}},{$match:{_id:id}}])
         console.log(myCart)
         res.status(200).json({message:"cart item found successfully ",myCart})
     } catch (error) {

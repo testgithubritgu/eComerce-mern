@@ -1,3 +1,4 @@
 // meine images sare undraw svg se download kiye hai
 //fonts ke liye meine sare code mein Outfit google font use kiya
 //meine icons ke liye emogi picker library and whats app icon in vs code use kiya
+//for notify i used npm install sonner 

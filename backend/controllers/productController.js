@@ -110,8 +110,9 @@ exports.deleteProduct = async (req, res) => {
 exports.getProductById = async (req, res) => {
     const { id } = req.params
     try {
+        
         const getProduct = await productModel.findById(id)
-
+        
         if (!getProduct) { return res.status(404).json({ message: "no product found for this id", success: false }) }
 
         res.status(200).json({ message: "get product successfully", success: true, item: getProduct })
