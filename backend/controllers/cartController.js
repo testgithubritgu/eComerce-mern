@@ -1,6 +1,7 @@
 const cartModel = require("../model/Cart")
 const userModel = require("../model/User")
 const productModel = require("../model/Product")
+const { default: mongoose } = require("mongoose")
 exports.addToCart = async (req, res) => {
     const { id } = req.user
     const productId = req.params.id
@@ -23,6 +24,11 @@ exports.addToCart = async (req, res) => {
             price
         }
         if (checkUserCart) {
+            const isProductInMyCart = checkUserCart.items.some(data => data.Product ==(productId))
+            
+            if(isProductInMyCart){
+                return res.status(404).json({message:"item is already present in cart"})
+            }
             checkUserCart.items.push(productForCart)
             checkUserCart.totalPrice += price
             await checkUserCart.save()
@@ -64,14 +70,23 @@ exports.removeCartItem = async (req, res) => {
 }
 
 
-exports.getMyCartItems = async(req,res)=>{
+exports.getMyCartItems = async (req, res) => {
     try {
-        const {id} = req.user
-       
-        const myCart = await cartModel.aggregate([{$group:{_id:"$user",item:{$push:"$items"}}},{$match:{_id:id}}])
-        console.log(myCart)
-        res.status(200).json({message:"cart item found successfully ",myCart})
+        const { id } = req.user
+
+        const myCart = await cartModel.findOne({ user: id })
+        if (!myCart) { return res.status(404).json({ message: "no cart found" }) }
+        const getPro = await cartModel.aggregate([{ $match: { user: new mongoose.Types.ObjectId(id) } }, { $unwind: "$items" }, {
+            $lookup: {
+                from: "products",
+                foreignField: "_id",
+                localField: "items.Product",
+                as: "myCartItems"
+            }
+        }, { $unwind:"$myCartItems"}])
+        console.log(getPro)
+        res.status(200).json({ message: "cart item found successfully ", getPro })
     } catch (error) {
-        res.status(500).json({message:"internal server error ",err:error.message})
+        res.status(500).json({ message: "internal server error ", err: error.message })
     }
 }

@@ -52,8 +52,10 @@ const ProductData = ({ favItem }) => {
         { qty: count },
         { headers: { authorization: "Bearer " + (token && token) } }
       );
-      console.log(res)
+
+      toast.success("Added to cart successfully")
     } catch (error) {
+      toast.warning("already added")
       console.log(error.message)
     }
   }
@@ -105,7 +107,7 @@ const ProductData = ({ favItem }) => {
           <section className="qty flex justify-start items-center gap-3 my-3 mb-5">
             <div className="w-fit">
               <button
-                onClick={() => setcount(count - 1)}
+                onClick={() => setcount(count >0 ?count - 1 : count)}
                 className="w-[50px] h-[50px] border"
               >
                 -

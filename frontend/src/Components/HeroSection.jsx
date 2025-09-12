@@ -23,7 +23,7 @@ const HeroSection = () => {
               {Array(4)
                 .fill("")
                 .map((e, i) => (
-                  <div className="h-[50px] w-[50px] bg-white rounded-full text-[10px] font-bold flex flex-col justify-center items-center">
+                  <div key={i} className="h-[50px] w-[50px] bg-white rounded-full text-[10px] font-bold flex flex-col justify-center items-center">
                     <span>23</span>
                     <span>Hours</span>
                   </div>

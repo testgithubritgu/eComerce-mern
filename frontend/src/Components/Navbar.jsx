@@ -23,11 +23,11 @@ const Navbar = () => {
         </h1>
         <div className="flex gap-4 text-lg cursor-pointer text-slate-500 items-center">
           {navLinks.map((elem, idx) => (
-            <>
+            <span  key={idx}>
               <Link to={elem}>
-                <span>{elem}</span>
-              </Link>
-            </>
+                {elem}
+              </Link></span>
+            
           ))}
         </div>
 
@@ -37,10 +37,11 @@ const Navbar = () => {
           <Link to={"/cart"}>
             <span className="text-4xl">🛒</span>
           </Link>
-          <div className='text-4xl cursor-pointer relative text-slate-600 '>
-            
+          <div className="text-4xl cursor-pointer relative text-slate-600 ">
             <CiHeart />
-            <span className='absolute text-red-500 text-sm -top-2 -right-2 font-bold '>2</span>
+            <span className="absolute text-red-500 text-sm -top-2 -right-2 font-bold ">
+              2
+            </span>
           </div>
         </div>
       </div>

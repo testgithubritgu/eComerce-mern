@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import axios from "axios";
 import { baseURL } from "../Utils/service";
 import { useNavigate } from "react-router-dom";
+import { authContext } from "../Context/Context";
 
 const Products = () => {
   const navigate = useNavigate();
 
-  const [product, setproduct] = useState([]);
+  
+
+  const {product, setproduct} = useContext(authContext)
   const [ProductLimit, setProductLimit] = useState(8);
   const token = localStorage.getItem("token");
 
@@ -25,7 +28,7 @@ const Products = () => {
 
         { headers: { authorization: `Bearer ${token}` } }
       );
-      console.log(res);
+     
       setproduct(res.data.Product);
     } catch (error) {
       console.log(error.message);
@@ -43,7 +46,7 @@ const Products = () => {
     };
     getproduct();
   },[])
-  console.log(product)
+
   return (
     <>
       <div className="min-h-[500px] py-11  my-7">
@@ -57,7 +60,7 @@ const Products = () => {
 
       { product.length > 0? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-fit">
           { product.map((e, i) => (
-            <div
+            <div key={i}
               onClick={() => getProductById(e._id)}
               className=" min-h-fit cursor-pointer"
             >
@@ -83,7 +86,7 @@ const Products = () => {
                     {Array(5)
                       .fill("")
                       .map((e, i) => (
-                        <span className="text-sm">⭐</span>
+                        <span key={i} className="text-sm">⭐</span>
                       ))}
                   </div>
                 </div>

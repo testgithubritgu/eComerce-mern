@@ -2,41 +2,45 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { authContext } from "../../Context/Context";
 import { CiSearch } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 const NavbarSearch = () => {
   const [getSearchInput, setgetSearchInput] = useState("");
+  const { setproduct } = useContext(authContext);
   const [getProductName, setgetProductName] = useState([]);
-  const {handleSearch,sethandleSearch} = useContext(authContext)
+  const { handleSearch, sethandleSearch } = useContext(authContext);
+  const navigate = useNavigate();
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res =await axios.get(
-        `http://localhost:5001/api/product/get_product/itmes?name=${getSearchInput}`
+      const res = await axios.get(
+        `http://localhost:5001/api/product/get_product/itmes?name=${getSearchInput.trim()}`
       );
-      console.log(res)
-
+      navigate("/");
+      setproduct(res.data.Product);
     } catch (error) {
-        console.log(error.message)
-
+      console.log(error.message);
     }
   };
   useEffect(() => {
     async function getProduct() {
-      if (!getSearchInput){return }
-        try {
-          const res = await axios.get(
-            `http://localhost:5001/api/product/get_product?name=${getSearchInput}`
-          );
-          sethandleSearch(true)
-          setgetProductName(res.data.Product);
-        } catch (error) {
-          sethandleSearch(false)
-        }
+      if (!getSearchInput) {
+        return;
+      }
+      try {
+        const res = await axios.get(
+          `http://localhost:5001/api/product/get_product?name=${getSearchInput.trim()}`
+        );
+        sethandleSearch(true);
+        setgetProductName(res.data.Product);
+      } catch (error) {
+        sethandleSearch(false);
+      }
     }
     getProduct();
   }, [getSearchInput]);
-  console.log(getProductName);
+ 
   return (
     <>
       <div className="relative">
@@ -60,7 +64,7 @@ const NavbarSearch = () => {
         {getProductName.length > 0 && handleSearch && (
           <div className="absolute p-2 bg-white w-full h-fit text-slate-500 z-10">
             {getProductName.map((e, i) => (
-              <div className="flex gap-2 my-1 items-center text-sm cursor-pointer">
+              <div key={i} className="flex gap-2 my-1 items-center text-sm cursor-pointer">
                 <span>
                   <CiSearch />
                 </span>
@@ -69,7 +73,6 @@ const NavbarSearch = () => {
                 </span>
               </div>
             ))}{" "}
-
           </div>
         )}
       </div>

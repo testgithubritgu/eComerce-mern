@@ -8,6 +8,7 @@ const CreatAuthContext = ({children}) => {
     const [user ,setuser]= useState(userData? userData:false)
     const [productImgdata, setproductImgdata] = useState('');
    const [prdData, setprdData] = useState(null);
+   const [product, setproduct] = useState([]);
    const [handleSearch,sethandleSearch] = useState(false)
     return (
       <authContext.Provider
@@ -20,6 +21,8 @@ const CreatAuthContext = ({children}) => {
           setprdData,
           sethandleSearch,
           handleSearch,
+          product,
+          setproduct,
         }}
       >
         {children}
