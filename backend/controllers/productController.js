@@ -4,15 +4,15 @@ const productModel = require("../model/Product")
 //add new product
 exports.newProduct = async (req, res) => {
     try {
-        const { name, category, price, discount, stock, desc } = req.body
-        const img  = req.file
+        const { name, category, price, discount, stock, desc,img } = req.body
+        // const img  = req.file 
        
         const isExist = await productModel.findOne({ name })
         if (isExist) {
             return res.status(400).json({ message: 'Product already exists' })
         }
         const newItem = await productModel.create({
-            name, category, price, discount, stock, desc, productImage:img.filename
+            name, category, price, discount, stock, desc, productImage:img
         })
         res.status(201).json({ message: 'product created successfully', newItem })
     } catch (error) {
