@@ -48,11 +48,13 @@ const ProductData = ({ favItem }) => {
   const addToCart = async()=>{
     try {
       const res = await axios.post(
-        `${baseURL}cart/addItem/${id}`
-      )
+        `${baseURL}/cart/addItem/${id}`,
+        { qty: count },
+        { headers: { authorization: "Bearer " + (token && token) } }
+      );
       console.log(res)
     } catch (error) {
-      
+      console.log(error.message)
     }
   }
 

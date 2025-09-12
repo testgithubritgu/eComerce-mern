@@ -1,5 +1,5 @@
 const express = require("express")
-const { newProduct, getProduct, updateProduct, getAllProducts, deleteProduct, getProductById } = require("../controllers/productController")
+const { newProduct, getProduct, updateProduct, getAllProducts, deleteProduct, getProductById, getProductQuery, getProductItemsQuery } = require("../controllers/productController")
 const { authCheck } = require("../middelware/authCheck")
 const { upload } = require("../multer/multer")
 const router = express.Router()
@@ -7,8 +7,11 @@ const router = express.Router()
 //add new product here
 router.post('/new_product', authCheck, upload.single("file"), newProduct)
 
-//get product by user query
-router.get("/get_product", authCheck, getProduct)
+//get product by user search query only return name
+router.get("/get_product", getProductQuery)
+
+//get product by user search
+router.get("/get_product/itmes", getProductItemsQuery)
 
 //get limited product
 router.get("/product_limit", getProduct)
@@ -24,6 +27,7 @@ router.get("/get_products", getAllProducts)
 
 //delete product by id
 router.delete("/delete_product/:id", authCheck, deleteProduct)
+
 
 
 module.exports = router

@@ -21,13 +21,31 @@ exports.newProduct = async (req, res) => {
     }
 }
 
-//get product by user query
-exports.getProduct = async (req, res) => {
+//get product by user search query return name
+exports.getProductQuery = async (req, res) => {
 
     try {
-        const { name ,limit } = req.query
-        const findProduct = await productModel.find({ name:{$regex:`^${name}`,$options:"i"} }).limit(Number(limit))
-        if (findProduct.length === 0) {
+        const { name  } = req.query
+        if(!name) {return}
+        console.log(name)
+        const findProduct = await productModel.aggregate([{ $match:{name:{$regex:`${name}`,$options:"i"}} },{$project:{name:1}}])
+        if (findProduct.length === 0) { 
+            return res.status(404).json({ message: "no product found" })
+        }
+        res.status(200).json({ message: "product found!!", Product: findProduct })
+    } catch (error) {
+        res.status(500).json({ message: "internal server error" , err:error.message})
+    }
+}
+//get product by user query
+exports.getProductItemsQuery = async (req, res) => {
+
+    try {
+        const { name  } = req.query
+        if(!name) {return}
+        console.log(name)
+        const findProduct = await productModel.aggregate([{ $match:{name:{$regex:`${name}`,$options:"i"}} }])
+        if (findProduct.length === 0) { 
             return res.status(404).json({ message: "no product found" })
         }
         res.status(200).json({ message: "product found!!", Product: findProduct })
@@ -94,13 +112,12 @@ exports.deleteProduct = async (req, res) => {
         const { id } = req.params
 
         const deleteProduct = await productModel.findByIdAndDelete(id)
-
+         
         if (!deleteProduct) { return res.status(404).json({ message: "no product found for delete", success: false }) }
 
         res.status(200).json({ message: "delete product successfully", success: true })
 
     } catch (error) {
-
         res.status(500).json({ message: "internal server error", success: false })
 
     }

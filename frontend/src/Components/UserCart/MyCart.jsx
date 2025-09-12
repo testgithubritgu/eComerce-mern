@@ -25,7 +25,7 @@ const MyCart = () => {
         <h1 className="text-slate-500 text-sm">
           Home / <span className="text-slate-800">Cart</span>
         </h1>
-        <br />
+      =
         <div className="py-3 w-full">
           <table className=" w-full text-left p-3">
             <thead>
@@ -36,7 +36,7 @@ const MyCart = () => {
                 <th className="p-3">Subtotal</th>
               </tr>
             </thead>
-            <br />
+          
             <tbody className="">
               <tr className="border my-2 ">
                 <td className="p-3 flex gap-2">
@@ -57,7 +57,7 @@ const MyCart = () => {
                 </td>
               </tr>
             </tbody>
-            <br />
+          
             <tbody className="">
               <tr className="border my-2 ">
                 <td className="p-3 flex gap-2">

@@ -66,7 +66,7 @@ exports.getFavourite = async(req,res)=>{
         if (!findUser) {return res.status(404).json({message:"no user found"})}
         const getProducts = await favModel.aggregate([{ $match: { user: findUser.user } },{$unwind:"$items"},{$lookup:{
             from:"products",
-            localField:"items.product",
+            localField:"items.product",                                                                            
             foreignField:"_id",
             as:"prdData"
         }},{$unwind:"$prdData"},{$group:{_id:id,myproduct:{$push:"$prdData"}}}])

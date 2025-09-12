@@ -6,6 +6,7 @@ import NoCart from './UserCart/NoCart';
 
 const Cart = () => {
   const {user} = useContext(authContext)
+
   return (
     <>
      {user?<MyCart/>:<NoCart/>}

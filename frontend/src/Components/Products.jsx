@@ -34,18 +34,16 @@ const Products = () => {
   useEffect(() => {
     const getproduct = async () => {
       try {
-        const res = await axios.get(
-          `${baseURL}/product/product_limit?limit=8`,
-
-          { headers: { authorization: `Bearer ${token}` } }
-        );
+        const res = await axios.get(`${baseURL}/product/product_limit?limit=8`,{ headers: { authorization: `Bearer ${token}` } });
+       
         setproduct(res.data.Product);
       } catch (error) {
         console.log(error.message);
       }
     };
     getproduct();
-  }, []);
+  },[])
+  console.log(product)
   return (
     <>
       <div className="min-h-[500px] py-11  my-7">
@@ -57,7 +55,7 @@ const Products = () => {
           Explore Our Products
         </h1>
 
-      { !product.length === 0? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-fit">
+      { product.length > 0? <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-fit">
           { product.map((e, i) => (
             <div
               onClick={() => getProductById(e._id)}
