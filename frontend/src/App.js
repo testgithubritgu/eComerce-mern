@@ -11,6 +11,7 @@ import Product from './Pages/ProductPage'
 import TopSell from './Components/TopSell'
 import AboutUs from './Pages/AboutUs'
 import { authContext } from './Context/Context'
+import Checkout from './Pages/Checkout'
 
 const App = () => {
   const checkPath = useLocation()
@@ -31,6 +32,7 @@ const App = () => {
             <Route path='/setting' element={<Account />} />
             <Route path='/product/:id' element={<Product />} />
             <Route path='/about' element={<AboutUs />} />
+            <Route path='/checkout' element={<Checkout />} />
 
           </Routes>
     </div>

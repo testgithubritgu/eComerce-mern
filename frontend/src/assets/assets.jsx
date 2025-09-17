@@ -9,13 +9,21 @@ import feature3 from "./FeturedWomens/featureSection4.jpg"
 import loader from "./loading-image.webp"
 import shop from "./shop.jpg"
 import shoppingloader from "./cart-add-to-cart.webp"
+import BCA from "./Payment/BCA.png"
+import masterCard from "./Payment/masterCard.png"
+import visa from "./Payment/visa.png"
+import ibm from "./Payment/imbm.png"
 export const assets = {
   pass,
+  BCA,
   shoppingloader,
   shopping,
+  masterCard,
   profile,
   feature,
+  visa,
   headPhone,
+  ibm,
   feature1,
   feature2,
   feature3,

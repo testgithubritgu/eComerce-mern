@@ -1,5 +1,5 @@
 
 
-export const baseURL = "http://localhost:5001/api"
+export const baseURL = "https://ecomerce-mern-1.onrender.com/api";
 
 

@@ -1,7 +1,7 @@
 const userModel = require("../model/User")
 const orderModel = require("../model/Order")
 const productModel = require("../model/Product")
-
+const mongoose = require("mongoose")
 
 
 
@@ -10,9 +10,10 @@ exports.myOrders = async (req, res) => {
     const { id } = req.user
     const productId = req.params.id
     const { qty, street, city, state, pincode } = req.body
-
+    
     try {
         const getProduct = await productModel.findById(productId)
+        console.log(getProduct)
 
         if (!getProduct) { return res.status(404).json({ message: "no product found " }) }
 

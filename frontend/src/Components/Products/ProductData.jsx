@@ -8,13 +8,14 @@ import { authContext } from "../../Context/Context";
 import axios from "axios";
 import { baseURL } from "../../Utils/service";
 import { useParams } from "react-router-dom";
+import {assets} from "../../assets/assets"
 const ProductData = ({ favItem }) => {
     const [bgOfHeart, setbgOfHeart] = useState(false);
   const { id } = useParams();
   const [count, setcount] = useState(1);
   const [size, setsize] = useState(0);
   const token = localStorage.getItem("token");
-  const { setproductImgdata, prdData } = useContext(authContext);
+  const { user, prdData } = useContext(authContext);
 
   const sizeArray = [
     { size: "XS" },
@@ -47,6 +48,10 @@ const ProductData = ({ favItem }) => {
 
   const addToCart = async()=>{
     try {
+       if (!user) {
+         toast.warning("You are not looged in");
+         return
+       }
       const res = await axios.post(
         `${baseURL}/cart/addItem/${id}`,
         { qty: count },
@@ -55,7 +60,9 @@ const ProductData = ({ favItem }) => {
 
       toast.success("Added to cart successfully")
     } catch (error) {
-      toast.warning("already added")
+     
+
+       toast.warning("already added");
       console.log(error.message)
     }
   }
@@ -107,7 +114,7 @@ const ProductData = ({ favItem }) => {
           <section className="qty flex justify-start items-center gap-3 my-3 mb-5">
             <div className="w-fit">
               <button
-                onClick={() => setcount(count >0 ?count - 1 : count)}
+                onClick={() => setcount(count > 0 ? count - 1 : count)}
                 className="w-[50px] h-[50px] border"
               >
                 -
@@ -123,7 +130,10 @@ const ProductData = ({ favItem }) => {
             <button className="h-[50px] w-[200px] bg-red-500 rounded text-white">
               Buy Now
             </button>
-            <button onClick={()=>addToCart()} className="h-[50px] w-[200px] bg-yellow-200 text-black rounded">
+            <button
+              onClick={() => addToCart()}
+              className="h-[50px] w-[200px] bg-yellow-200 text-black rounded"
+            >
               Add to Cart
             </button>
             <button
@@ -163,7 +173,7 @@ const ProductData = ({ favItem }) => {
           </section>
         </div>
       ) : (
-        "sdfsdf"
+        <img src={assets.shoppingloader} alt="" />
       )}
     </>
   );

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { authContext } from "../../Context/Context";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "../../Utils/service";
 
 const NavbarSearch = () => {
   const [getSearchInput, setgetSearchInput] = useState("");
@@ -15,7 +16,7 @@ const NavbarSearch = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:5001/api/product/get_product/itmes?name=${getSearchInput.trim()}`
+        `${baseURL}/product/get_product/itmes?name=${getSearchInput.trim()}`
       );
       navigate("/");
       setproduct(res.data.Product);
@@ -30,7 +31,7 @@ const NavbarSearch = () => {
       }
       try {
         const res = await axios.get(
-          `http://localhost:5001/api/product/get_product?name=${getSearchInput.trim()}`
+          `${baseURL}/product/get_product?name=${getSearchInput.trim()}`
         );
         sethandleSearch(true);
         setgetProductName(res.data.Product);

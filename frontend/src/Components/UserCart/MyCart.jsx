@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { assets } from '../../assets/assets'
+import React, { useContext, useEffect, useState } from 'react'
+
 import axios from 'axios'
 import { baseURL } from '../../Utils/service'
+import { authContext } from '../../Context/Context';
+import Coupon from './Coupon';
+import { Link } from 'react-router-dom';
 
 const MyCart = () => {
-  const [qty,setqty] = useState(1)
-  const [myCart,setmyCart] = useState([])
+
+  const {myCart, setmyCart} = useContext(authContext);
  useEffect(()=>{
   const token = localStorage.getItem("token")
     async function getcart(){
@@ -26,7 +29,7 @@ const MyCart = () => {
         <h1 className="text-slate-500 text-sm">
           Home / <span className="text-slate-800">Cart</span>
         </h1>
-        
+
         <div className="py-3 w-full">
           <table className=" w-full text-left p-3">
             <thead>
@@ -55,7 +58,6 @@ const MyCart = () => {
                       <input
                         type="number"
                         value={e.items.qty}
-                        onChange={(e) => setqty(e.target.value)}
                         className="border  w-20 rounded border-gray-300 p-2 text-gray-700 focus:border-blue-500 focus:ring-blue-200"
                       />
                     </td>
@@ -75,18 +77,7 @@ const MyCart = () => {
         </div>
         {/* Cart summery */}
         <div className="py-4 my-10 flex justify-between">
-          <div>
-            <form action="" className="flex gap-3">
-              <input
-                type="text"
-                className="outline-none border  border-stone-700   rounded-xl text-slate-500 py-2 px-5"
-                placeholder="Coupon Code"
-              />
-              <button className="bg-red-500 text-white px-6 rounded-xl  cursor-pointer">
-                apply coupon
-              </button>
-            </form>
-          </div>
+          <Coupon />
           <div className="w-[500px]  p-6  border-2 shadow-xl border-stone-500">
             <h1 className="text-[20px] font-semibold">Cart Total</h1>
 
@@ -102,9 +93,10 @@ const MyCart = () => {
               <span>Total</span>
               <span>₹{myCart.length > 0 && myCart[0].totalPrice + 100}/-</span>
             </div>
+            <Link to={"/checkout"}>
             <button className="text-white text-sm py-2 px-5 bg-red-500 block mx-auto my-4">
               Process to checkout
-            </button>
+            </button></Link>
           </div>
         </div>
       </div>
