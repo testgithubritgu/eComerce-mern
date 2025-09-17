@@ -42,7 +42,7 @@ exports.myOrders = async (req, res) => {
         getProduct.stock -= qty
         await getProduct.save()
 
-        if (!checkOrderUser) {
+        if (!checkOrderUser) { 
             const newOrder = await orderModel.create({
                 user: id,
                 items: [{ product: productId, qty, price }],
@@ -51,7 +51,7 @@ exports.myOrders = async (req, res) => {
             })
             return res.status(201).json({ message: "Order created", success: true, order: newOrder })
         } else {
-            checkOrderUser.items.push({ product: productId, qty, price })
+            checkOrderUser.items.unshift({ product: productId, qty, price })
             checkOrderUser.totalAmount += price
             await checkOrderUser.save()
             return res.status(200).json({ message: "Order updated", success: true, order: checkOrderUser })
