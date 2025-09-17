@@ -4,6 +4,7 @@ import Coupon from "../Components/UserCart/Coupon";
 import { authContext } from "../Context/Context";
 import axios from "axios"
 import { baseURL } from "../Utils/service";
+import { toast, Toaster } from "sonner";
 
 const Checkout = () => {
   const { myCart } = useContext(authContext);
@@ -14,9 +15,9 @@ const Checkout = () => {
     const val = e.target.value 
     setaddressDetails(pre => ({...pre,[e.target.name]:val}))
   }
-  // qty, street, city, state, pincode;
+
   const placeOrder  = async(idx,qty,street,city,state,pincode)=>{
-      console.log(myCart[idx].items.Product);
+  
         try {
           const res = await axios.post(
             `${baseURL}/order/orderProduct/${myCart[idx].items.Product}`,
@@ -30,21 +31,43 @@ const Checkout = () => {
             { headers: { authorization: "Bearer " + (token && token) } }
           );
           console.log(res)
+    
+          toast.success("Order placed");
+         
         } catch (error) {
           console.log(error)
+          toast.error(error.message)
         }
   }
+
+
+
+
+
   const onFormSubmit = (e)=>{
     e.preventDefault()
+ 
+    if(myCart.length === 0){
+      toast.warning("No cart items found😥")
+      return
+    }
     const { address, city, state, pincode } = addressDetails;
     try {
       if(myCart.length > 0){
-        for(let i = 0;i<myCart.length ; i++){
+
+        let mycartlen = myCart.length
+        for (let i = 0; i < mycartlen; i++) {
           placeOrder(i, myCart[i].items.qty, address, city, state, pincode);
+         
         }
+        
+    
+
+       
       }
     } catch (error) {
-      
+      console.log(error)
+      toast.error(error.message)
     }
   }
   console.log(addressDetails);
@@ -71,8 +94,13 @@ const Checkout = () => {
   ];
   return (
     <>
+      <Toaster richColors position="top-center" />
       <div className="px-32 py-5 min-h-fit">
-        <form onSubmit={(e)=>onFormSubmit(e)} action="" className="flex gap-40 justify-center items-center">
+        <form
+          onSubmit={(e) => onFormSubmit(e)}
+          action=""
+          className="flex gap-40 justify-center items-center"
+        >
           <div className="forBillingDetails w-[50%]   p-3">
             <h1 className="text-4xl text-slate-700 mb-8">Billing Details</h1>
             {billingDetails.map((elm, idx) => (
@@ -83,7 +111,7 @@ const Checkout = () => {
                 </label>
                 <br />
                 <input
-                  onChange={(e)=>onBillingInputChanges(e)}
+                  onChange={(e) => onBillingInputChanges(e)}
                   required={elm.require}
                   className="name w-full outline-none bg-stone-100 py-2 mb-4  px-2 text-slate-700 text-sm"
                   id={elm.identy}
@@ -99,7 +127,7 @@ const Checkout = () => {
           </div>
           <div className="placeOrder w-[50%] text-sm  px-28 ">
             <div className="min-h-fit">
-              {myCart &&
+              {myCart.length >0 ?
                 myCart.map((e, i) => (
                   <div className="text-sm my-3 flex justify-between items-center">
                     <div className="flex justify-center gap-4 items-center">
@@ -115,7 +143,7 @@ const Checkout = () => {
                     </div>
                     <span>₹{e.items.price}/-</span>
                   </div>
-                ))}
+                )): <><h1 className="text-lg font-semibold text-center">no cart items found</h1></>}
             </div>
             <div className="mt-5">
               <div className={stylesForTotalSummery}>
