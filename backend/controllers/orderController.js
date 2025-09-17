@@ -3,7 +3,16 @@ const orderModel = require("../model/Order")
 const productModel = require("../model/Product")
 const mongoose = require("mongoose")
 
-
+exports.getMyOrders = async(req,res)=>{
+    const {id} = req.user
+    try {
+        const findMyOrder = await orderModel.findOne({user:id})
+        if(!findMyOrder){return res.state(404).json({message:"no order found "})}
+        res.status(200).json({ message: "user order found successfully", findMyOrder })
+    } catch (error) {
+        res.status(500).json({message:"internal server error",error})
+    }
+}
 
 
 exports.myOrders = async (req, res) => {
