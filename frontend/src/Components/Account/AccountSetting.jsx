@@ -10,7 +10,7 @@ const AccountSetting = () => {
     };
   return (
     <>
-      <div className="h-fit py-32 px-32  flex">
+      <div className="h-fit py-32 px-32  flex gap-4 justify-center ">
         <div className="flex flex-col gap-7 ">
           <div className=" space-y-1 w-[300px] text-slate-500">
             <h1 className="font-medium ">Manage My Accont</h1>
@@ -33,7 +33,7 @@ const AccountSetting = () => {
             Logout
           </button>
         </div>
-        <div className=" w-full">sdf</div>
+        <div className=" w-[50%] h-[343px] bg-gray-100 p-4 overflow-scroll overflow-x-hidden "></div>
       </div>
     </>
   );
