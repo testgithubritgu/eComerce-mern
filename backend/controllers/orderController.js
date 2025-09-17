@@ -8,7 +8,14 @@ exports.getMyOrders = async(req,res)=>{
     try {
         const findMyOrder = await orderModel.findOne({user:id})
         if(!findMyOrder){return res.state(404).json({message:"no order found "})}
-        res.status(200).json({ message: "user order found successfully", findMyOrder })
+        const getProduct = await orderModel.aggregate([{$match:{user:new mongoose.Types.ObjectId(id)}},{$unwind:"$items"},{$lookup:{
+            from:"products",
+            localField:"items.product",
+            foreignField:"_id",
+            as:"myorder"
+
+        }},{$unwind:"$myorder"},{$group:{_id:"$user",orders:{$push:"$myorder"}}}])
+        res.status(200).json({ message: "user order found successfully", getProduct })
     } catch (error) {
         res.status(500).json({message:"internal server error",error})
     }

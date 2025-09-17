@@ -7,3 +7,5 @@ router.post('/orderProduct/:id', authCheck, myOrders)
 router.post('/cancelOrder', authCheck, cancelOrder)
 router.get('/getOrders', authCheck, getMyOrders)
 module.exports = router
+
+
