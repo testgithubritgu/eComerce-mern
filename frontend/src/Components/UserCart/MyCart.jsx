@@ -7,10 +7,13 @@ import Coupon from './Coupon';
 import { Link } from 'react-router-dom';
 import { toast, Toaster } from 'sonner';
 
+
 const MyCart = () => {
+  const {myCart, setmyCart} = useContext(authContext);
+
   const {token} = useContext(authContext)
      const removeCartItem = async (idx) => {
-    
+
      
     try {
        const res = await axios.post(
@@ -29,7 +32,6 @@ const MyCart = () => {
 
 
    };
-  const {myCart, setmyCart} = useContext(authContext);
  useEffect(()=>{
   const token = localStorage.getItem("token")
     async function getcart(){
@@ -43,6 +45,7 @@ const MyCart = () => {
     } 
     getcart()
  },[])
+
   return (
     <>
     <Toaster position='top-center' richColors/>
@@ -82,6 +85,7 @@ const MyCart = () => {
                         type="number"
                         value={e.items.qty}
                         className="border  w-20 rounded border-gray-300 p-2 text-gray-700 focus:border-blue-500 focus:ring-blue-200"
+                        readOnly
                       />
                     </td>
                     <td className="p-3">₹{e.items.price}/-</td>

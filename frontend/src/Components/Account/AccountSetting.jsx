@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
+import MyOrders from '../orders/MyOrders';
 const AccountSetting = () => {
     const navigate = useNavigate();
     const logout = () => {
@@ -33,7 +34,9 @@ const AccountSetting = () => {
             Logout
           </button>
         </div>
-        <div className=" w-[50%] h-[343px] bg-gray-100 p-4 overflow-scroll overflow-x-hidden "></div>
+        <div className=" w-[50%] h-[343px] bg-gray-100 p-4 overflow-scroll overflow-x-hidden ">
+          <MyOrders/>
+        </div>
       </div>
     </>
   );
